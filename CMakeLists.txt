@@ -12,12 +12,15 @@ add_subdirectory(lfbb)
 
 # Library configuration
 if (DEFINED LFBB_MULTICORE_HOSTED)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE LFBB_MULTICORE_HOSTED)
+    target_compile_definitions(${PROJECT_NAME}
+    PUBLIC
+        LFBB_MULTICORE_HOSTED=${LFBB_MULTICORE_HOSTED}
+    )
 endif()
 
 if (DEFINED LFBB_CACHELINE_LENGTH)
     target_compile_definitions(${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
         LFBB_CACHELINE_LENGTH=${LFBB_CACHELINE_LENGTH}
     )
 endif()
