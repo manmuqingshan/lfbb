@@ -147,7 +147,7 @@ uint8_t *LFBB_ReadAcquire(LFBB_Inst_Type *inst, size_t *available) {
 
     /* When read and write indexes are equal, the buffer is empty */
     if (r == w) {
-        *available = 0;
+        *available = 0U;
         return NULL;
     }
 
