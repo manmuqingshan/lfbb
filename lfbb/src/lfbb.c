@@ -58,7 +58,9 @@ static size_t CalcFree(size_t w, size_t r, size_t size);
 void LFBB_Init(LFBB_Inst_Type *inst, uint8_t *data_array, const size_t size) {
     assert(inst != NULL);
     assert(data_array != NULL);
-    assert(size != 0U);
+    /* One slot is always reserved to distinguish empty from full, so the
+     * minimum useful buffer size is 2. */
+    assert(size > 1U);
 
     inst->data = data_array;
     inst->size = size;
