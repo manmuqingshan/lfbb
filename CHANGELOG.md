@@ -37,7 +37,7 @@
 
 ## 1.2.2
 
-- Improved performance by using a write_wrapped flag instead of infering write wraps
+- Improved performance by using a write_wrapped flag instead of inferring write wraps
 
 ## 1.2.1
 

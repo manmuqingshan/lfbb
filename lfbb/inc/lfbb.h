@@ -90,41 +90,43 @@ typedef struct {
 
 /**
  * @brief Initializes a bipartite buffer instance
- * @param[in] Instance pointer
- * @param[in] Data array pointer
- * @param[in] Size of data array
+ * @param[in] inst Instance pointer
+ * @param[in] data_array Data array pointer
+ * @param[in] size Size of data array (must be greater than 1)
  * @retval None
  */
 void LFBB_Init(LFBB_Inst_Type *inst, uint8_t *data_array, size_t size);
 
 /**
  * @brief Acquires a linear region in the bipartite buffer for writing
- * @param[in] Instance pointer
- * @param[in] Free linear space in the buffer required
- * @retval Pointer to the beginning of the linear space
+ * @param[in] inst Instance pointer
+ * @param[in] free_required Free linear space in the buffer required
+ * @retval Pointer to the beginning of the linear space, or NULL if a
+ *         contiguous region of the requested size is not available
  */
 uint8_t *LFBB_WriteAcquire(LFBB_Inst_Type *inst, size_t free_required);
 
 /**
  * @brief Releases the bipartite buffer after a write
- * @param[in] Instance pointer
- * @param[in] Bytes written to the linear space
+ * @param[in] inst Instance pointer
+ * @param[in] written Bytes written to the linear space
  * @retval None
  */
 void LFBB_WriteRelease(LFBB_Inst_Type *inst, size_t written);
 
 /**
  * @brief Acquires a linear region in the bipartite buffer for reading
- * @param[in] Instance pointer
- * @param[out] Available linear data in the buffer
- * @retval Pointer to the beginning of the data
+ * @param[in] inst Instance pointer
+ * @param[out] available Available linear data in the buffer
+ * @retval Pointer to the beginning of the data, or NULL if the buffer is
+ *         empty (in which case \p available is set to 0)
  */
 uint8_t *LFBB_ReadAcquire(LFBB_Inst_Type *inst, size_t *available);
 
 /**
  * @brief Releases the bipartite buffer after a read
- * @param[in] Instance pointer
- * @param[in] Bytes read from the linear region
+ * @param[in] inst Instance pointer
+ * @param[in] read Bytes read from the linear region
  * @retval None
  */
 void LFBB_ReadRelease(LFBB_Inst_Type *inst, size_t read);
