@@ -182,6 +182,7 @@ void LFBB_ReadRelease(LFBB_Inst_Type *inst, const size_t read) {
     }
 
     /* Increment the read index and wrap to 0 if needed */
+    assert(r + read <= inst->size);
     r += read;
     if (r == inst->size) {
         r = 0U;
