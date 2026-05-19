@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.9
+
+- Fixed `LFBB_MULTICORE_HOSTED` not being forwarded as a value through CMake and being exposed as `PRIVATE`, which silently ignored the user-supplied value and caused a struct layout mismatch between the library build and consumers
+- Tightened debug-time asserts: `LFBB_Init` now rejects single-byte buffers, `LFBB_ReadRelease` asserts the read amount stays within the buffer
+- Documentation, style and tooling fixes
+
 ## 1.3.8
 
 - Avoided potential false sharing due to wrapping indexes for performance
@@ -37,7 +43,7 @@
 
 ## 1.2.2
 
-- Improved performance by using a write_wrapped flag instead of infering write wraps
+- Improved performance by using a write_wrapped flag instead of inferring write wraps
 
 ## 1.2.1
 

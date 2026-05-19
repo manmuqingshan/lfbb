@@ -34,7 +34,7 @@
  * This file is part of LFBB - Lock Free Bipartite Buffer
  *
  * Author:          Djordje Nedic <nedic.djordje2@gmail.com>
- * Version:         1.3.8
+ * Version:         1.3.9
  **************************************************************/
 
 /************************** INCLUDE ***************************/
@@ -58,7 +58,9 @@ static size_t CalcFree(size_t w, size_t r, size_t size);
 void LFBB_Init(LFBB_Inst_Type *inst, uint8_t *data_array, const size_t size) {
     assert(inst != NULL);
     assert(data_array != NULL);
-    assert(size != 0U);
+    /* One slot is always reserved to distinguish empty from full, so the
+     * minimum useful buffer size is 2. */
+    assert(size > 1U);
 
     inst->data = data_array;
     inst->size = size;
@@ -145,7 +147,7 @@ uint8_t *LFBB_ReadAcquire(LFBB_Inst_Type *inst, size_t *available) {
 
     /* When read and write indexes are equal, the buffer is empty */
     if (r == w) {
-        *available = 0;
+        *available = 0U;
         return NULL;
     }
 
@@ -182,6 +184,7 @@ void LFBB_ReadRelease(LFBB_Inst_Type *inst, const size_t read) {
     }
 
     /* Increment the read index and wrap to 0 if needed */
+    assert(r + read <= inst->size);
     r += read;
     if (r == inst->size) {
         r = 0U;

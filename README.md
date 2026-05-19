@@ -1,7 +1,7 @@
 # LFBB - Lock Free Bipartite Buffer
-![CMake](https://github.com/DNedic/lfbb/actions/workflows/.github/workflows/cmake.yml/badge.svg)
+![CMake](https://github.com/DNedic/lfbb/actions/workflows/cmake.yml/badge.svg)
 
-LFBB is a bipartite buffer implementation written in standard C11, suitable for all platforms, from deeply embedded to HPC uses. It is lock-free for single consumer single producer scenarios making it incredibly performant and easy to use.
+LFBB is a bipartite buffer implementation written in standard C11, suitable for all platforms, from deeply embedded to HPC uses. It is lock-free for single-producer, single-consumer scenarios making it incredibly performant and easy to use.
 
 ## What is a bipartite buffer
 
@@ -16,7 +16,7 @@ A bipartite buffer should be used everywhere a ring buffer is used if you want:
 
 ## Features
 * Written in standard C11, compatible with all platforms supporting it
-* Lock free thread and multicore safe in single producer single consumer scenarios
+* Lock free thread and multicore safe in single-producer, single-consumer scenarios
 * No dynamic allocation
 * Optimized for high performance
 * MIT Licensed
@@ -49,7 +49,7 @@ if (!write_started) {
         write_started = true;
     }
 } else {
-    if (ADC_PollDmaComplete(&adc_dma_h) {
+    if (ADC_PollDmaComplete(&adc_dma_h)) {
         LFBB_WriteRelease(&lfbb_adc, sizeof(data));
         write_started = false;
     }
@@ -57,13 +57,13 @@ if (!write_started) {
 ```
 
 ## Configuration
-The library offers two configuration defines ```LFBB_MULTICORE_HOSTED``` and ```LFBB_CACHELINE_LENGTH``` that can be passed by the build system or defined before including the library if the configuration isn't suitable.
+The library offers two configuration defines `LFBB_MULTICORE_HOSTED` and `LFBB_CACHELINE_LENGTH` that can be passed by the build system or defined before including the library if the configuration isn't suitable.
 
-On embedded systems it is usually required to do manual cache synchronization, so ```LFBB_MULTICORE_HOSTED``` should be left as ```false``` to avoid wasting space on padding for cacheline alignment of indexes.
+On embedded systems it is usually required to do manual cache synchronization, so `LFBB_MULTICORE_HOSTED` should be left as `false` to avoid wasting space on padding for cacheline alignment of indexes.
 
-For hosted systems the [False Sharing](https://en.wikipedia.org/wiki/False_sharing) phenomenom can reduce performance to some extent which is why passing ```LFBB_MULTICORE_HOSTED``` as ```true``` is advisable. This aligns the indexes to the system cacheline size, ```64``` by default.
+For hosted systems the [False Sharing](https://en.wikipedia.org/wiki/False_sharing) phenomenon can reduce performance to some extent which is why passing `LFBB_MULTICORE_HOSTED` as `true` is advisable. This aligns the indexes to the system cacheline size, `64` by default.
 
-Some systems have a non-typical cacheline length (for instance the apple M1/M2 CPUs have a cacheline length of 128 bytes), and ```LFBB_CACHELINE_LENGTH``` should be set accordingly in those cases.
+Some systems have a non-typical cacheline length (for instance the apple M1/M2 CPUs have a cacheline length of 128 bytes), and `LFBB_CACHELINE_LENGTH` should be set accordingly in those cases.
 
 ## How it works
 The Bipartite Buffer uses the same base principle as the [ring buffer data structure](https://en.wikipedia.org/wiki/Circular_buffer), however its ability to provide contiguous space for writing and reading requires modifying the approach slightly.

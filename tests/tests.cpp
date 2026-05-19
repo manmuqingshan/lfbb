@@ -62,7 +62,7 @@ TEST_CASE("Write with overflow condition", "[write_overflow]") {
     uint8_t *read_location = LFBB_ReadAcquire(&lfbb, &read_available);
     LFBB_ReadRelease(&lfbb, sizeof(test_data));
 
-    /* Write again, this time the oveflow will trigger and should give us the
+    /* Write again, this time the overflow will trigger and should give us the
      * beginning again */
     const uint8_t test_data2[240] = {0xA3U};
     write_location = LFBB_WriteAcquire(&lfbb, sizeof(test_data2));
@@ -93,7 +93,7 @@ TEST_CASE("Read data written after overflow condition write",
     uint8_t *read_location = LFBB_ReadAcquire(&lfbb, &read_available);
     LFBB_ReadRelease(&lfbb, sizeof(test_data));
 
-    /* Write again, this time the oveflow will trigger and should give us the
+    /* Write again, this time the overflow will trigger and should give us the
      * beginning again */
     const uint8_t test_data2[240] = {0xA3U};
     write_location = LFBB_WriteAcquire(&lfbb, sizeof(test_data2));
